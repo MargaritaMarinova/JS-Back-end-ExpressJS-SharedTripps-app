@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const User = require('../handlers/users/User');
 const handlebars = require('express-handlebars');
 const {cookie} = require('../config/config');
