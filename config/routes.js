@@ -1,10 +1,10 @@
-const routes = require('../routes');
+const router = require('../routes');
 
 module.exports = (app) => {
 
-    app.use('/home', routes.home);
+    app.use('/home', router.home);
 
-    app.use('/user', routes.users);
+    app.use('/user', router.users);
 
-    app.use('/tripp', routes.tripps); 
+    app.use('/tripp', router.tripps); 
 };
