@@ -11,6 +11,11 @@ module.exports = {
 
         register(req, res, next) {
             res.render('users/register.hbs');
+        },
+
+        logout(req, res, next){
+            req.user = null,
+            res.clearCookie(cookie).redirect('/home/')
         }
     },
 

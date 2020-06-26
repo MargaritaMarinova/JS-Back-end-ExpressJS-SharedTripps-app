@@ -7,11 +7,21 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">                     
 
+                    {{#if isLoggedIn}}
+                     <li class="nav-item">
+                        <a class="nav-link" href="#">Shared Tripps</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/logout">Logout as [{{ userEmail }}]</a>
+                    </li>
+                    {{else}}
                     <li class="nav-item">
                         <a class="nav-link" href="/user/login">Login</a>
                     </li>
+                    {{/if}}
+
 
                 </ul>
             </div>
@@ -30,12 +40,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Shared Tripps</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logout as [{{ loggedEmail }}]</a>
-                    </li>
+                   
 
                 </ul>
             </div>
