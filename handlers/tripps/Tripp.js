@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema, model: Model} = mongoose;
 const {String, Number, ObjectId} = Schema.Types;
-
+const User = require('../users/User');
 
 const trippSchema = new Schema({
     startPoint: {
@@ -30,6 +30,11 @@ const trippSchema = new Schema({
 
     carImage: {
         type: String
+    },
+
+    driver: {
+        type: ObjectId,
+        ref: 'User'
     },
 
     buddies: {
