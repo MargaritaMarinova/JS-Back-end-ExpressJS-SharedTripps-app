@@ -1,6 +1,8 @@
 //const User = require('./User');
 const jwt = require('../../utils/jwt');
-const {cookie} = require('../../config/config');
+const {
+    cookie
+} = require('../../config/config');
 const User = require('./User');
 
 module.exports = {
@@ -13,41 +15,71 @@ module.exports = {
             res.render('users/register.hbs');
         },
 
-        logout(req, res, next){
+        logout(req, res, next) {
             req.user = null,
-            res.clearCookie(cookie).redirect('/home/')
+                res.clearCookie(cookie).redirect('/home/')
         }
     },
 
     post: {
         login(req, res, next) {
-            const {email, password} = req.body;
+            const {
+                email,
+                password
+            } = req.body;
 
-            User.findOne({email})
+            User.findOne({
+                    email
+                })
                 .then((user) => {
                     return Promise.all([user.passwordsMatch(password), user])
                 }).then(([match, user]) => {
-                     if(!match){
-                         next(err); //TODO add the validator
-                         return;
-                     }
+                    if (!match) {
+                        next(err); //TODO add the validator
+                        return;
+                    }
 
-                     const token = jwt.createToken(user);
+                    const token = jwt.createToken(user);
 
-                     res
-                     .status(201)
-                     .cookie(cookie, token, {maxAge: 3600000})
-                     .redirect('/home/');
+                    res
+                        .status(201)
+                        .cookie(cookie, token, {
+                            maxAge: 3600000
+                        })
+                        .redirect('/home/');
                 })
         },
 
         register(req, res, next) {
-            const {email, password, rePassword } = req.body;
+            const {
+                email,
+                password,
+                rePassword
+            } = req.body;
+            if (password !== rePassword) {
+                res.render('users/register.hbs', {
+                    message: 'Passwords do not match',
+                    oldInput: {
+                        email,
+                        password,
+                        rePassword
+                    }
+                });
+                return;
+            }
 
-            User.create({
-                    email,
-                    password
-                })
+            User.findOne({
+                email
+            }).then((currentUser) => {
+                if (currentUser) {
+                    res.render('users/register.hbs', {
+                        message: 'The given email is already used',
+                        oldInput: { email, password, rePassword}
+                    });
+                    return;
+                }
+            })
+            User.create({email, password})
                 .then((createdUser) => {
                     console.log(createdUser);
                     res.redirect('/user/login');
