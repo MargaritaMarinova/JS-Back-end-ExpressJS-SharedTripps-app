@@ -26,7 +26,7 @@ module.exports = {
         detailsTripp(req, res, next){
            const {id} = req.params; 
            
-           Tripp.findById(id).lean().then((tripp)=> {
+           Tripp.findById(id).populate('buddies').lean().then((tripp)=> {
                const currentUser = JSON.stringify(req.user._id);
                const availableSeats = ((tripp.seats) - tripp.buddies.length);
               
@@ -45,9 +45,23 @@ module.exports = {
 
         closeTripp(req, res, next) {
            const {id} = req.params;
-           Tripp.deleteOne({_id: id}).then((deletedTripp)=> {
-               res.render('tripps/shared-tripps.hbs');
+           console.log(id)
+           
+           Tripp.deleteOne({_id:id}).then((deletedTripp)=> {
+           res.redirect(`/tripp/shared-tripps`);
            })
+        },
+
+        joinTripp(req, res, next){
+            const {id} = req.params;
+            const{_id} = req.user;
+
+            Promise.all([
+            Tripp.updateOne({_id:id}, {$push: {buddies: _id}}),
+            User.updateOne({_id}, {$push: {trippHistory: id}})
+            ]).then(([updatedTripp, updatedUser])=> {
+                res.redirect(`/tripp/details-tripp/${id}`)
+            })
         }
     },
 

@@ -24,8 +24,8 @@
                 <img style="display: block; margin: 0 auto; max-width: 100px;"
                     src="https://i-love-png.com/images/family-svg-clipart-white-3.png" />
                 <h5 style="font-weight: bold;">SharedTripp Buddies</h5>
-                {{#each buddies}}
-                <span>{{this}}</span>
+                {{#each tripp.buddies}}
+                <span>{{this.email}}</span>
                 {{else}}
                 <p>.  .  .  .  .</p>
                 {{/each}}
@@ -47,12 +47,12 @@
                     <a href="/tripp/close-tripp/{{tripp._id}}" class="btn btn-danger">Close this tripp</a>
                     {{else}}
                     {{#if isAlreadyJoined}}
-                    <a href="#" class="btn btn-info">Already joined. Don't be late!</a>
+                    <a class="btn btn-info">Already joined. Don't be late!</a>
                     {{else}}
                     {{#if isSeatsAvailable}}
-                    <a href="#" class="btn btn-info">Join now, {{availableSeats}} seats left</a>
+                    <a href="/tripp/join-tripp/{{tripp._id}}" class="btn btn-info">Join now, {{availableSeats}} seats left</a>
                     {{else}}
-                    <a href="#" class="btn btn-secondary">No seats available [0]</a>
+                    <a class="btn btn-secondary">No seats available [0]</a>
                     {{/if}}
                     {{/if}}
                     {{/if}}
