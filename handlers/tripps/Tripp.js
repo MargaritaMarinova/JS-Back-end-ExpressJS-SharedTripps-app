@@ -37,10 +37,10 @@ const trippSchema = new Schema({
         ref: 'User'
     },
 
-    buddies: {
+    buddies: [{
         type: ObjectId,
         ref: 'User'
-    }
+    }]
 
 });
 

@@ -43,9 +43,19 @@
                 <div style="width: 50%; word-wrap: break-word; padding: 1%; ">
                     <p style="width: 100%; word-wrap: break-word;" class="lead">
                         {{tripp.description}}</p>
-                        
-                    <a href="#" class="btn btn-danger">Close this tripp</a>
-
+                    {{#if isTheDriver}}    
+                    <a href="/tripp/close-tripp/{{tripp._id}}" class="btn btn-danger">Close this tripp</a>
+                    {{else}}
+                    {{#if isAlreadyJoined}}
+                    <a href="#" class="btn btn-info">Already joined. Don't be late!</a>
+                    {{else}}
+                    {{#if isSeatsAvailable}}
+                    <a href="#" class="btn btn-info">Join now, {{availableSeats}} seats left</a>
+                    {{else}}
+                    <a href="#" class="btn btn-secondary">No seats available [0]</a>
+                    {{/if}}
+                    {{/if}}
+                    {{/if}}
                 </div>
             </div>
 
