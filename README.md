@@ -8,6 +8,8 @@
 
 ## Install
 
+/Execute from project root directory/
+
 Install project dependencies:
 ```
 npm install
